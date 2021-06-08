@@ -1,0 +1,47 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container #nav-bar {
+  width: 80%;
+  padding: 30px;
+  margin: 20px auto;
+}
+#nav-bar #nav-list {
+  padding: 20px;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-evenly;
+}
+#nav-list button {
+  background-color: #fff;
+  border: none;
+  color: #0663dd;
+  text-decoration-line: none;
+  font-size: 20px;
+}
+
+#container .home-content .product-container {
+  padding: 10px;
+  border: 2px #000 solid;
+  margin-top: 20px;
+}
+
+table {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+td {
+  background-color: skyblue;
+  padding: 3px;
+}
+
+th {
+  background-color: slategray;
+  color: white;
+  padding: 4px;
+}
