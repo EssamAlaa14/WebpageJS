@@ -69,156 +69,95 @@ function getHomePage() {
     divEl.appendChild(pEl);
 
     /* Creating add to cart item */
-    const numInput = document.createElement("input");
-    const numInput1 = document.createElement("input");
-
     //Handling number input
+    const numInput = document.createElement("input");
     numInput.setAttribute("type", "text");
     numInput.setAttribute("value", "0");
     divEl.appendChild(numInput);
     let number = parseInt(numInput.value, 10);
     number = isNaN(number) ? 0 : number;
+    //Handling add button
     const addItemToCart = document.createElement("button");
+    addItemToCart.setAttribute("class", "add-btn");
     addItemToCart.innerText = "Add item to cart";
     divEl.appendChild(addItemToCart);
-
-    let quantity = product.Quantity;
     addItemToCart.addEventListener("click", function () {
       if (product.Quantity >= 1) {
         number++;
         numInput.value = number;
         --product.Quantity;
-        removeItemFromCart.disabled = false;
       } else {
         numInput.value = `You can't add more items`;
         addItemToCart.disabled = true;
       }
     });
-    /* Creating  remove from cart item */
-    const removeItemFromCart = document.createElement("button");
-    removeItemFromCart.innerText = "Remove item from cart";
-    removeItemFromCart.disabled = true;
-    removeItemFromCart.style.marginLeft = "10px";
-    removeItemFromCart.addEventListener("click", function () {
-      if (product.Quantity < quantity) {
-        addItemToCart.disabled = false;
-        number--;
-        numInput.value = number;
-        ++product.Quantity;
-      } else {
-        removeItemFromCart.disabled = true;
-      }
-    });
-
-    divEl.appendChild(removeItemFromCart);
 
     /* Single Page Product */
-    if (product.ProductPicUrl == imgEl.src) {
-      imgEl.addEventListener("click", function () {
-        homeDiv.style.display = "none";
-        productDiv.style.display = "block";
-        productDiv.style.margin = "20px";
+    imgEl.addEventListener("click", function () {
+      homeDiv.style.display = "none";
+      productDiv.style.display = "block";
+      productDiv.style.margin = "20px";
 
-        const divEl1 = document.createElement("div");
-        divEl1.style.display = "flex";
-        divEl1.style.flexWrap = "wrap";
-        divEl1.style.flexDirection = "column";
-        divEl1.style.alignItems = "center";
-        divEl1.style.border = "3px black solid";
-        divEl1.style.padding = "30px";
-        productDiv.appendChild(divEl1);
+      const divEl1 = document.createElement("div");
+      divEl1.style.display = "flex";
+      divEl1.style.flexWrap = "wrap";
+      divEl1.style.flexDirection = "column";
+      divEl1.style.alignItems = "center";
+      divEl1.style.border = "3px black solid";
+      divEl1.style.padding = "30px";
+      productDiv.appendChild(divEl1);
 
-        const h2El = document.createElement("h2");
-        h2El.innerText = `${product.Category}`;
-        divEl1.appendChild(h2El);
+      const h2El = document.createElement("h2");
+      h2El.innerText = `${product.Category}`;
+      divEl1.appendChild(h2El);
 
-        const h3El = document.createElement("h3");
-        h3El.innerText = `${product.Name}`;
-        divEl1.appendChild(h3El);
+      const h3El = document.createElement("h3");
+      h3El.innerText = `${product.Name}`;
+      divEl1.appendChild(h3El);
 
-        const pEl = document.createElement("p");
-        pEl.innerText = `${product.Description}`;
-        divEl1.appendChild(pEl);
+      const pEl = document.createElement("p");
+      pEl.innerText = `${product.Description}`;
+      divEl1.appendChild(pEl);
 
-        const pEl2 = document.createElement("p");
-        pEl2.innerText = `You can add up to = ${product.Quantity} items`;
-        divEl1.appendChild(pEl2);
+      const pEl2 = document.createElement("p");
+      pEl2.innerText = `You can add up to = ${product.Quantity} items`;
+      divEl1.appendChild(pEl2);
 
-        const imgEl2 = document.createElement("img");
-        imgEl2.src = `${product.ProductPicUrl}`;
-        imgEl2.maxWidth = "100%";
-        imgEl2.alt = "Image";
-        divEl1.appendChild(imgEl2);
+      const imgEl2 = document.createElement("img");
+      imgEl2.src = `${product.ProductPicUrl}`;
+      imgEl2.maxWidth = "100%";
+      imgEl2.alt = "Image";
+      divEl1.appendChild(imgEl2);
 
-        numInput1.setAttribute("type", "number");
-        numInput1.setAttribute("value", `${numInput.value}`);
-        //Handling number input
-        divEl1.appendChild(numInput1);
-
-        //Add to cart button on click handling
-        const addToCartBtn = document.createElement("button");
-        addToCartBtn.innerText = "Add to cart";
-        divEl1.appendChild(addToCartBtn);
-
-        addToCartBtn.addEventListener("click", function () {
-          if (product.Quantity >= 1) {
-            number++;
-            numInput1.value = number;
-            pEl2.innerText = `You can add up to = ${--product.Quantity} items`;
-
-            removeFromCartBtn.disabled = false;
-          } else {
-            pEl2.innerText = `This item is out of stock now`;
-            addToCartBtn.disabled = true;
-          }
-        });
-
-        //remove cart button on click handling
-        const removeFromCartBtn = document.createElement("button");
-        removeFromCartBtn.innerText = "Remove from cart";
-        divEl1.appendChild(removeFromCartBtn);
-        removeFromCartBtn.disabled = true;
-        let quantity = product.Quantity;
-        removeFromCartBtn.addEventListener("click", function () {
-          if (product.Quantity < quantity) {
-            addToCartBtn.disabled = false;
-            number--;
-            numInput1.value = number;
-            pEl2.innerText = `You can add up to = ${++product.Quantity} items`;
-          } else {
-            removeFromCartBtn.disabled = true;
-          }
-        });
-      });
-    }
+      /* Creating add to cart item */
+      //Handling number input
+      const numInput1 = document.createElement("input");
+      numInput1.setAttribute("type", "number");
+      numInput1.setAttribute("value", `${numInput.value}`);
+      divEl1.appendChild(numInput1);
+      //Add to cart button on click handling
+      const addToCartBtn = document.createElement("button");
+      addToCartBtn.innerText = "Add to cart";
+      divEl1.appendChild(addToCartBtn);
+    });
     outputProducts.push(product);
   });
 }
-// const cartList = [];
+// console.log(outputProducts);
 // let count = 0;
 // function passToCartList(id) {
-//   outputProducts.forEach((product) => {
-//     if (product.ProductId == id) {
+//   for (let i = 0; i < outputProducts.length; i++) {
+//     if (outputProducts[i].ProductId == id) {
 //       let addProduct = {
-//         product: `${product.Name}`,
-//         price: `${product.Price}`,
+//         product: `${outputProducts[i].Name}`,
+//         price: `${outputProducts[i].Price}`,
 //         quantity: `${++count}`,
-//         total: `${count * product.Price}`,
+//         total: `${count * outputProducts[i].Price}`,
 //       };
 //       cartList.push(addProduct);
 //     }
-//   });
-// }
-
-// function removeItemFromCart(name) {
-//   for (let i = 0; i < cartList.length; i++) {
-//     if (cartList[i].product == name) {
-//       cartList.splice(cartList[i], 1);
-//     }
 //   }
 // }
-
-// console.log(outputProducts);
 
 //--------------------------------------------------------------------------------//
 /* CART PAGE ---------------------------------------------------------- CART PAGE */
@@ -227,87 +166,99 @@ const cartPage = document.querySelector("#cart");
 // Cart page div container.
 const cartDiv = document.querySelector("#cart-content");
 
+const cartList = [];
 cartPage.onclick = function () {
   aboutDiv.style.display = "none";
   contactUsDiv.style.display = "none";
   productDiv.style.display = "none";
   homeDiv.style.display = "none";
   cartDiv.style.display = "block";
+  while (cartDiv.firstChild) {
+    cartDiv.removeChild(cartDiv.firstChild);
+  }
 };
 
-// cartPage.addEventListener("click", function () {
-//   let table = new GenericTable(cartList, "table");
-//   table.drawTable();
-// });
+cartPage.addEventListener("click", function () {
+  //Checking cart list to show items
+  if (cartList.length == 0) {
+    const noItems = document.createElement("h2");
+    noItems.innerText = "No items are added";
+    noItems.style.textAlign = "center";
+    cartDiv.appendChild(noItems);
+  } else {
+    let table = new cartItemsTable(cartList, "table");
+    table.drawTable();
+  }
+});
 
-// class GenericTable {
-//   arr = [];
-//   id = "";
-//   constructor(arr, id) {
-//     this.arr = arr;
-//     this.id = id;
-//   }
-//   //helper method for table header to display props as first letter caplital
-//   capitalizeFirstLetter(str) {
-//     //get first letter
-//     let firstChar = str[0].toUpperCase();
-//     //remove first letter
-//     str = str.substr(1);
-//     //add first letter after being capitlized
-//     return firstChar + str;
-//   }
+class cartItemsTable {
+  itemsArray = [];
+  tableId = "";
+  constructor(itemsArray, tableId) {
+    this.itemsArray = itemsArray;
+    this.tableId = tableId;
+  }
+  //Helper method for table header to display properties as first letter caplital
+  capitalizeFirstLetter(str) {
+    //get first letter
+    let firstChar = str[0].toUpperCase();
+    //remove first letter
+    str = str.substr(1);
+    //add first letter after being capitlized
+    return firstChar + str;
+  }
 
-//   //create part of the table header
-//   createHeader() {
-//     //get first element to take the props and convert it to table header
-//     let firstElement = this.arr[0];
-//     //the string that will hold the table header
-//     let tableHeader = "";
-//     //for each prop in first element create th tag
-//     for (let propName in firstElement) {
-//       tableHeader += `<th>${this.capitalizeFirstLetter(propName)}</th>`;
-//     }
-//     //tableHeader="<th>name</th><th>age</th><th>salary</th>"
-//     //wrap the ths tags with tr
-//     tableHeader = `<tr>${tableHeader}</tr>`;
-//     //tableHeader="<tr><th>name</th><th>age</th><th>salary</th></tr>"
+  //create part of the table header
+  createHeader() {
+    //get first element to take the props and convert it to table header
+    let firstElement = this.itemsArray[0];
+    //the string that will hold the table header
+    let tableHeader = "";
+    //for each prop in first element create th tag
+    for (let propName in firstElement) {
+      tableHeader += `<th>${this.capitalizeFirstLetter(propName)}</th>`;
+    }
+    //tableHeader="<th>name</th><th>age</th><th>salary</th>"
+    //wrap the ths tags with tr
+    tableHeader = `<tr>${tableHeader}</tr>`;
+    //tableHeader="<tr><th>name</th><th>age</th><th>salary</th></tr>"
 
-//     //return header
-//     return tableHeader;
-//   }
+    //return header
+    return tableHeader;
+  }
 
-//   //display data in html table
-//   //create part of the table body
-//   createBody() {
-//     //the string that will hold the table body
-//     let tableBody = "";
+  //display data in html table
+  //create part of the table body
+  createBody() {
+    //the string that will hold the table body
+    let tableBody = "";
 
-//     //for each element in the array create tr line
-//     for (let element of this.arr) {
-//       //the first part in the tr line is the opening tag
-//       tableBody += "<tr>";
-//       //for each prop in the element create the td tag
-//       for (let prop in element) {
-//         tableBody += `<td>${element[prop]}</td>`;
-//       }
-//       //the closing tag for the tr for current selected element
-//       tableBody += "</tr>";
-//     }
+    //for each element in the array create tr line
+    for (let element of this.itemsArray) {
+      //the first part in the tr line is the opening tag
+      tableBody += "<tr>";
+      //for each prop in the element create the td tag
+      for (let property in element) {
+        tableBody += `<td>${element[property]}</td>`;
+      }
+      //the closing tag for the tr for current selected element
+      tableBody += "</tr>";
+    }
 
-//     //return table body
-//     return tableBody;
-//   }
+    //return table body
+    return tableBody;
+  }
 
-//   //display data in html table
-//   //create the whole table and display it in div by id
-//   drawTable() {
-//     //create header
-//     let tableH = this.createHeader();
-//     //create body
-//     let tableB = this.createBody();
-//     //concat header and body and wrap with table tag
-//     this.tableHtml = `<table>${tableH}${tableB}</table>`;
-//     //set the inner html for the div to display the table
-//     cartDiv.innerHTML = this.tableHtml;
-//   }
-// }
+  //Display data in html table
+  //create the whole table and display it in div by id
+  drawTable() {
+    //create header
+    let tableH = this.createHeader();
+    //create body
+    let tableB = this.createBody();
+    //concat header and body and wrap with table tag
+    this.tableHtml = `<table>${tableH}${tableB}</table>`;
+    //set the inner html for the div to display the table
+    cartDiv.innerHTML = this.tableHtml;
+  }
+}
