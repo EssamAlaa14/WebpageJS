@@ -8,7 +8,7 @@
       "type": "chrome",
       "request": "launch",
       "name": "Debug JS",
-      "file": "${workspaceFolder}/index.html"
+      "file": "${workspaceFolder}/home.html"
     }
   ]
 }

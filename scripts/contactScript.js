@@ -1,34 +1,20 @@
 /* CONTACT US PAGE ---------------------------------------------- CONTACT US PAGE */
-
-/* Contact us page On click handling */
-const contactUsPage = document.querySelector("#contact-us");
-//Contact us div content
+// contact us page div container.
 const contactUsDiv = document.querySelector("#contact-content");
-contactUsPage.onclick = createFormElements;
-contactUsPage.addEventListener("click", function () {
-  homeDiv.style.display = "none";
-  aboutDiv.style.display = "none";
-  productDiv.style.display = "none";
-  cartDiv.style.display = "none";
-  contactUsDiv.style.display = "block";
-  contactUsPage.onclick = null;
-  while (productDiv.firstChild) {
-    productDiv.removeChild(productDiv.firstChild);
-  }
-});
 
 /* Creating Form */
 const form = document.createElement("form");
+createFormElements(); //calling form elements.
 function createFormElements() {
   contactUsDiv.style.display = "block";
   contactUsDiv.style.marginLeft = "200px";
   contactUsDiv.style.marginRight = "200px";
 
   /* Creating header */
-  const h2El2 = document.createElement("h2");
-  h2El2.innerHTML = "Leave us a message";
-  h2El2.style.marginBottom = "20px";
-  contactUsDiv.appendChild(h2El2);
+  const h2El = document.createElement("h2");
+  h2El.innerHTML = "Leave us a message";
+  h2El.style.marginBottom = "20px";
+  contactUsDiv.appendChild(h2El);
 
   //Giving Horizontal Row After Heading
   const line = document.createElement("hr");
@@ -36,14 +22,12 @@ function createFormElements() {
   contactUsDiv.appendChild(line);
 
   /* Adding paragraph */
-  const pEl2 = document.createElement("p");
-  let message2 = ` Driven by smart technology, everything we do is designed to
+  const pEl = document.createElement("p");
+  pEl.innerText = ` Driven by smart technology, everything we do is designed to
         put the power directly in your hands – giving you the freedom to shop
         however, whenever and wherever you like.`;
-  let msgHolder = document.createTextNode(message2);
-  pEl2.appendChild(msgHolder);
-  pEl2.style.marginBottom = "20px";
-  contactUsDiv.appendChild(pEl2);
+  pEl.style.marginBottom = "20px";
+  contactUsDiv.appendChild(pEl);
 
   /* Adding form elements */
   contactUsDiv.appendChild(form);
@@ -149,7 +133,7 @@ const contactUsAPILink =
 form.addEventListener("submit", (event) => {
   // prevent default
   event.preventDefault();
-
+  //Input fields...
   const name = document.querySelector("#name");
   const email = document.querySelector("#email");
   const subject = document.querySelector("#subject");
