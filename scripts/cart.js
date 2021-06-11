@@ -1,87 +1,106 @@
-/* CART PAGE ---------------------------------------------------------- CART PAGE */
-// Cart page div container.
-let header = "";
-// let index = JSON.parse(window.localStorage.getItem("index"));
-// let index1 = JSON.parse(window.localStorage.getItem("index1"));
+/* CART PAGE ----------------------------------------------------------------------- CART PAGE */
 
-let cartIt2 = JSON.parse(window.localStorage.getItem("index"));
-let cartIt1 = JSON.parse(window.localStorage.getItem("index1"));
-
-if (cartIt1 == null || cartIt2 == null) {
-  if (cartIt1 == null) {
-    cartIt1 = [];
+//Receiving selected items in cart list
+let cartItem1 = JSON.parse(window.localStorage.getItem("index"));
+let cartItem2 = JSON.parse(window.localStorage.getItem("index1"));
+//Adding all received items into single array
+if (cartItem1 == null || cartItem2 == null) {
+  if (cartItem1 == null) {
+    cartItem1 = [];
   }
-  if (cartIt2 == null) {
-    cartIt2 = [];
+  if (cartItem2 == null) {
+    cartItem2 = [];
   }
-  cartIt = cartIt2.concat(cartIt1);
+  cartItemsArray = cartItem2.concat(cartItem1);
 } else {
-  cartIt = cartIt2.concat(cartIt1);
+  cartItemsArray = cartItem2.concat(cartItem1);
 }
+//Filtering duplicate items and update their quantities
+let nameKey = "Name"; //Filtering objects by their Name property
 
-console.log(cartIt);
+let filteredCartItemsArray = [];
 
-let key = "Name";
-let arr2 = [];
-function findOcc(cartIt, key) {
-  cartIt.forEach((x) => {
-    // Checking if there is any object in arr2
-    // which contains the key value
+function filterDuplicateArrayItems(cartItemsArray, nameKey) {
+  cartItemsArray.forEach((key) => {
+    // Checking if there is any object in filtered array which contains the key value
     if (
-      arr2.some((val) => {
-        return val[key] == x[key];
+      filteredCartItemsArray.some((sameKey) => {
+        return sameKey[nameKey] == key[nameKey];
       })
     ) {
-      // If yes! then increase the occurrence by 1
-      arr2.forEach((k) => {
-        if (k[key] === x[key]) {
+      filteredCartItemsArray.forEach((k) => {
+        if (k[nameKey] === key[nameKey]) {
           k["Quantity"]++;
         }
       });
     } else {
-      // If not! Then create a new object initialize
-      // it with the present iteration key's value and
-      // set the quantity to 1
-      let a = {};
-      a[key] = x[key];
-      a["Quantity"] = 1;
-      a["Price"] = x["Price"];
-      a["ProductPicUrl"] = x["ProductPicUrl"];
-      arr2.push(a);
+      let items = {};
+      items[nameKey] = key[nameKey];
+      items["Quantity"] = 1;
+      items["Price"] = key["Price"];
+      items["ProductPicUrl"] = key["ProductPicUrl"];
+      filteredCartItemsArray.push(items);
     }
   });
-  return arr2;
 }
-findOcc(cartIt, key);
+filterDuplicateArrayItems(cartItemsArray, nameKey);
 
-arr2.forEach((element) => {
-  header += `<div>
-        <img src = ${element.ProductPicUrl}>
-        <h2> Name ${element.Name} </h2>
-        <p> Price $${element.Price} </p>
-        <p> Quantity ${element.Quantity} </p>
-        <p> Total ${element.Quantity * element.Price} </p>
-        </div>
-        
-        `;
-});
-
-let totalSum = 0;
-arr2.forEach((element) => {
-  totalSum += parseInt(element.Quantity) * parseInt(element.Price);
-});
-header += `<div> <p> Total Sum = ${totalSum}  </p> </div>`;
-
+/* Displaying */
+// Cart page div container.
 let cartDiv = document.querySelector("#cart-content");
-// document.body.innerHTML = header;
-cartDiv.innerHTML = header;
-// document.getElementById("cart-content").innerHTML = header;
+let itemElement = "";
+let totalSum = 0;
 
-let clearBtn = document.createElement("button");
-clearBtn.innerText = "Clear Item";
-cartDiv.appendChild(clearBtn);
-clearBtn.addEventListener("click", function () {
+if (filteredCartItemsArray.length == 0) {
+  itemElement += `<h2 class="no-items"> No items are added </h2>`;
+  cartDiv.innerHTML = itemElement;
+} else {
+  itemElement += `<div class="tr-header"> 
+                    <div class="tr-product">
+                      <p> Product </p>
+                    </div>
+                    <div class="tr-price">
+                          <p>Price</p>
+                          <p>Quantity</p>
+                          <p>Total</p>
+                    </div>
+                  </div>`;
+
+  filteredCartItemsArray.forEach((element) => {
+    itemElement += ` <li class="list"> 
+                        <div class="cart-item-in-one-row">
+                          <div class="cart-img-name">
+                            <img src = ${element.ProductPicUrl}>
+                            <p> ${element.Name} </p> 
+                          </div>
+                          <div class="cart-price-quantity-total">
+                            <p> $${element.Price} </p>
+                            <p> ${element.Quantity} </p>
+                            <p class="total"> $${
+                              element.Quantity * element.Price
+                            } </p>
+                          </div>
+                          <div class="clearbtn">
+                            <button class="removeItem"> 
+                                <i class="far fa-trash-alt"></i> 
+                            </button>
+                          </div>
+                        </div> 
+                    </li>`;
+    totalSum += parseInt(element.Quantity) * parseInt(element.Price);
+  });
+
+  itemElement += `<div class="total-sum"> 
+                    <h3> Cart Totals </h3> 
+                    <hr> 
+                    <p> Total: $${totalSum} </p> 
+                    <button onclick="removeAll()"> Remove All </button>
+                  </div>`;
+  cartDiv.innerHTML = itemElement;
+}
+
+function removeAll() {
   window.localStorage.removeItem("index");
   window.localStorage.removeItem("index1");
   window.location.reload();
-});
+}

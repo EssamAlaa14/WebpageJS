@@ -1,10 +1,7 @@
-/* HOME PAGE ---------------------------------------------------------- HOME PAGE */
+/* HOME PAGE ------------------------------------------------------------------------- HOME PAGE */
 // Home page div container.
 const homeDiv = document.querySelector("#home-content");
-//Add Styling to the container of Home Page
-homeDiv.style.display = "flex";
-homeDiv.style.flexWrap = "wrap";
-homeDiv.style.justifyContent = "space-around";
+
 /* GET Request from Server */
 //Home Api link.
 const homeAPILink =
@@ -19,22 +16,16 @@ xhr.onload = function getHomePage() {
   const receivedResponse = xhr.response;
   const products = JSON.parse(receivedResponse).data;
 
-  const cartList = [];
-
+  const cartList = []; //array filled with each item selected to be sent to cart page
   /* Looping on products come from server */
   products.forEach((product) => {
     /* Creating div with its style */
     const divEl = document.createElement("div");
-    divEl.classList.add("col-4", "p-3");
-    divEl.style.marginTop = "20px";
-    divEl.style.padding = "10px";
-    divEl.style.border = "2px #000 solid ";
+    divEl.setAttribute("id", "product-home-page-div");
     homeDiv.appendChild(divEl);
 
     /* Creating h2 inside div with its style */
     const h2El = document.createElement("h2");
-    h2El.style.textAlign = "center";
-    h2El.style.color = "#0663dd";
     h2El.innerText = `${product.Name}`;
     divEl.appendChild(h2El);
 
@@ -42,39 +33,37 @@ xhr.onload = function getHomePage() {
     const aEl = document.createElement("a");
     aEl.href = `singlePage.html?ProductId=${product.ProductId}`;
     const imgEl = document.createElement("img");
-    imgEl.classList.add("img-thumbnail", "img-fluid");
     //Getting data inside img
     imgEl.src = product.ProductPicUrl;
-
-    // imgEl.addEventListener("click", singlePage()); /* Single Page Product */
     aEl.appendChild(imgEl);
     divEl.appendChild(aEl);
 
     /* Creating p inside div with its style */
     const pEl = document.createElement("p");
-    pEl.style.color = "red";
-    pEl.style.fontSize = "20px";
-    pEl.innerText = `$${product.Price}`;
+    pEl.innerText = `Price: $${product.Price}`;
     divEl.appendChild(pEl);
 
     /* Creating add to cart item */
+    const itemToCartDiv = document.createElement("div");
+    itemToCartDiv.setAttribute("class", "item-to-cart-div");
     //Handling number input
     const numInput = document.createElement("input");
     numInput.setAttribute("type", "text");
     numInput.setAttribute("value", "0");
-    divEl.appendChild(numInput);
+    numInput.setAttribute("max", `${product.Quantity}`);
+    itemToCartDiv.appendChild(numInput);
     let number = parseInt(numInput.value, 10);
     number = isNaN(number) ? 0 : number;
-    //Handling add button
+    //Handling add items to cart button
     const addItemToCart = document.createElement("button");
-    addItemToCart.setAttribute("class", "add-btn");
-    addItemToCart.innerText = "Add item to cart";
-    let index = 0;
+    itemToCartDiv.appendChild(addItemToCart);
+    addItemToCart.innerHTML = `Add item to cart <i class="fas fa-shopping-cart"></i>`;
+    let dataInCart = {}; //object takes values of each item
     addItemToCart.addEventListener("click", function () {
       if (product.Quantity >= 1) {
         number++;
         numInput.value = number;
-        let dataInCart = {
+        dataInCart = {
           Name: `${product.Name}`,
           Price: `${product.Price}`,
           ProductPicUrl: `${product.ProductPicUrl}`,
@@ -82,15 +71,17 @@ xhr.onload = function getHomePage() {
         };
         --product.Quantity;
         cartList.push(dataInCart);
-        ++index;
       } else {
-        numInput.value = `You can't add more items`;
+        noMore.style.display = "block";
         addItemToCart.disabled = true;
       }
       window.localStorage.setItem("index", JSON.stringify(cartList));
-      // window.localStorage.setItem("index", JSON.stringify(index));
-      // window.localStorage.setItem(index, JSON.stringify(cartList));
     });
-    divEl.appendChild(addItemToCart);
+    //If user added all items to cart
+    let noMore = document.createElement("p");
+    noMore.innerText = "You can't add more items";
+    noMore.style.display = "none";
+    itemToCartDiv.appendChild(noMore);
+    divEl.appendChild(itemToCartDiv);
   });
 };

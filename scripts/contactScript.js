@@ -1,4 +1,4 @@
-/* CONTACT US PAGE ---------------------------------------------- CONTACT US PAGE */
+/* CONTACT US PAGE ---------------------------------------------------------- CONTACT US PAGE */
 // contact us page div container.
 const contactUsDiv = document.querySelector("#contact-content");
 
@@ -6,13 +6,9 @@ const contactUsDiv = document.querySelector("#contact-content");
 const form = document.createElement("form");
 createFormElements(); //calling form elements.
 function createFormElements() {
-  contactUsDiv.style.display = "block";
-  contactUsDiv.style.marginLeft = "200px";
-  contactUsDiv.style.marginRight = "200px";
-
   /* Creating header */
   const h2El = document.createElement("h2");
-  h2El.innerHTML = "Leave us a message";
+  h2El.innerText = "Leave us a message";
   h2El.style.marginBottom = "20px";
   contactUsDiv.appendChild(h2El);
 
@@ -23,9 +19,7 @@ function createFormElements() {
 
   /* Adding paragraph */
   const pEl = document.createElement("p");
-  pEl.innerText = ` Driven by smart technology, everything we do is designed to
-        put the power directly in your hands – giving you the freedom to shop
-        however, whenever and wherever you like.`;
+  pEl.innerText = ` Driven by smart technology, everything we do is designed to put the power directly in your hands – giving you the freedom to shop however, whenever and wherever you like.`;
   pEl.style.marginBottom = "20px";
   contactUsDiv.appendChild(pEl);
 
@@ -33,12 +27,12 @@ function createFormElements() {
   contactUsDiv.appendChild(form);
   //Name label
   const label1 = document.createElement("label");
-  label1.innerHTML = "Name";
+  label1.innerText = "Name";
   form.appendChild(label1);
   //Email label
   const label2 = document.createElement("label");
-  label2.innerHTML = "Email";
-  label2.style.marginLeft = "500px";
+  label2.innerText = "Email";
+  label2.style.marginLeft = "580px";
   form.appendChild(label2);
   //Line break
   const lineBreak1 = document.createElement("br");
@@ -60,7 +54,7 @@ function createFormElements() {
   email.setAttribute("name", "Email");
   email.setAttribute("size", "56px");
   email.setAttribute("required", "true");
-  email.style.marginLeft = "112px";
+  email.style.marginLeft = "130px";
   form.appendChild(email);
 
   //Line breaks
@@ -82,7 +76,7 @@ function createFormElements() {
   subject.setAttribute("id", "subject");
   subject.setAttribute("type", "text");
   subject.setAttribute("name", "Subject");
-  subject.setAttribute("size", "133.5px");
+  subject.setAttribute("size", "133px");
   subject.setAttribute("required", "true");
   form.appendChild(subject);
 
