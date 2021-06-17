@@ -32,7 +32,56 @@
           </li>
         </ul>
       </nav>
-      <div id="contact-content"></div>
+      <div id="contact-content">
+        <h2 style="margin-bottom: 20px">Leave us a message</h2>
+        <hr style="margin-bottom: 20px" />
+        <p style="margin-bottom: 20px">
+          Driven by smart technology, everything we do is designed to put the
+          power directly in your hands – giving you the freedom to shop however,
+          whenever and wherever you like.
+        </p>
+        <form id="form">
+          <label for="name">Name</label>
+          <label for="email" style="margin-left: 580px">Email</label>
+          <br />
+          <input type="text" name="Name" size="56px" id="name" required />
+          <input
+            type="email"
+            name="Email"
+            size="56px"
+            id="email"
+            required
+            style="margin-left: 130px"
+          />
+          <br />
+          <br />
+          <label for="subject">Subject</label>
+          <br />
+          <input
+            type="text"
+            name="Subject"
+            id="subject"
+            size="133px"
+            required
+          />
+          <br />
+          <br />
+          <label for="txtMsg">Message</label>
+          <br />
+          <textarea
+            name="Message"
+            id="txtMsg"
+            cols="135"
+            rows="10"
+            required
+          ></textarea>
+          <br />
+          <br />
+          <button id="submitBtn" type="submit" value="submit" name="Submit">
+            Send Message
+          </button>
+        </form>
+      </div>
     </div>
     <!-- Script -->
     <script src="scripts/contactScript.js"></script>
